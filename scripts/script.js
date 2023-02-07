@@ -4,9 +4,7 @@ function lockscreen_button_click() {
     lockscreen.classList.remove('lockscreen-deactive');
 }
 
-document.getElementById("Lockscreen").addEventListener('click', function(event){
-    active();
- });
+document.getElementById("Lockscreen").addEventListener('click', (event) => active());
 
  document.getElementById("lockscreen-form").addEventListener('submit', (event) => lockscreen_form_submit(event));
 
