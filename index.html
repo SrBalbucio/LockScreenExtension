@@ -1,12 +1,326 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Fira+Sans:200,400,500,600,700);
+
+    body {
+        color: #E5DADA;
+        margin: 0;
+        overflow-x: hidden;
+        font-family: 'Fira Sans', sans-serif;
+        background-color: black;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: black;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #454545;
+            border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: grey;
+        }
+    }
+
+    .page-title {
+        margin-bottom: 20px;
+        font-size: 30px;
+        font-weight: normal;
+    }
+
+    .settings-page {
+        width: 300px;
+        background-color: black;
+
+        .settings-container {
+            width: 100%;
+            max-width: 850px;
+            margin: auto;
+            padding: 20px;
+            padding-top: 40px;
+
+            .settings-title {
+                color: #454545;
+                text-transform: uppercase;
+                font-weight: normal;
+                font-size: 20px;
+            }
+
+            .settings-section {
+                width: 100%;
+                border-top: 2px solid #454545;
+                padding-top: 10px;
+                margin-bottom: 20px;
+
+                .my-form {
+                    max-width: 400px;
+                    width: 100%;
+                    margin: 30px auto;
+
+                    .form-submit.right {
+                        justify-content: flex-end;
+                    }
+
+                    .form-submit {
+                        display: flex;
+
+                        .btn {
+                            width: 50%;
+                        }
+                    }
+
+                    .form-group.editable .input-group {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 0.5rem;
+
+                        .form-control {
+                            margin-bottom: 0;
+                        }
+
+                        .btn {
+                            height: 38px;
+                            margin: 0 10px;
+                            background-color: #E59500;
+                            transition: all .5s;
+
+                            &:hover {
+                                color: #E59500;
+                                background-color: #E5DADA;
+                            }
+                        }
+
+                        & i {
+                            cursor: pointer;
+                            color: #454545;
+                            transition: all .5s;
+
+                            &:hover {
+                                color: #E59500;
+                            }
+                        }
+                    }
+                }
+
+                .non-active-form {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 0.5rem;
+
+                    & p {
+                        padding: 7px 15px;
+                        margin-bottom: 0;
+                        font-size: 1rem;
+                        cursor: default;
+                    }
+
+                    & i {
+                        cursor: pointer;
+                        color: #454545;
+                        transition: all .5s;
+                        margin-right: 10px;
+
+                        &:hover {
+                            color: #E59500;
+                            transform: scale(1.1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .img-upload-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 1em;
+
+        & label {
+            margin-bottom: 20px;
+            position: relative;
+            border-radius: 0.25rem;
+            height: 80px;
+            min-width: 80px;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: grey;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            background-size: contain;
+        }
+
+        & h4 {
+            text-align: left;
+            font-size: 16px;
+            color: grey;
+            cursor: pointer;
+            transition: all .5s;
+
+            &:hover {
+                color: white;
+            }
+        }
+
+        .img-preview-container {
+            position: absolute;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+
+        .img-preview {
+            background: center center no-repeat;
+            background-size: cover;
+            height: 80px;
+            width: 80px;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+        .img-upload {
+            margin-bottom: 0;
+        }
+
+        & input {
+            display: none;
+        }
+
+        .alert {
+            margin-top: 10px;
+            position: absolute;
+            bottom: 0px;
+            background-color: transparent;
+            border: 0;
+            color: #E59500;
+        }
+    }
+
+    .form-group {
+        .input-group {
+            border-radius: 0.25rem;
+            overflow: hidden;
+
+            & input.form-control {
+                border: none;
+                padding: 10px 15px;
+                background-color: #2e2e2e;
+                color: #E5DADA;
+                font-family: 'Fira Sans', sans-serif;
+            }
+        }
+
+        .alert-input {
+            color: #E59500;
+            font-weight: 100;
+            font-size: 13px;
+        }
+    }
+
+    .form-submit {
+        width: 100%;
+    }
+
+    .btn {
+        border-radius: 0.25rem;
+        background-color: grey;
+        color: #E5DADA;
+        cursor: default;
+
+        &:disabled {
+            opacity: 0.75;
+        }
+
+        &:not(:disabled):not(.disabled) {
+            background-color: #E59500;
+        }
+    }
+</style>
+<div class="settings-page">
+    <div class="settings-container">
+        <h1 class="page-title">Config</h1>
+        <div class="settings-section">
+            <h2 class="settings-title">Username</h2>
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="username" name="username" placeholder="Novo username" type="text" class="form-control"
+                           autocomplete="Username" value="">
+                    <span class="focus-input"></span>
+                </div>
+            </div>
+            <br>
+            <div class="form-submit">
+                <button id="changeusername" class="btn button full">Trocar Username</button>
+            </div>
+            <h4 id="usernametext"></h4>
+        </div>
+        <div class="settings-section">
+            <h2 class="settings-title">Delay de bloqueio</h2>
+            <h6>Delay em minutos</h6>
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="psstime" name="currentPassword" placeholder="Senha" type="password" class="form-control"
+                           autocomplete="Senha" value="">
+                    <span class="focus-input"></span>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="minutes" name="time" placeholder="Time" type="number" class="form-control"
+                           autocomplete="Minutos" value="">
+                    <span class="focus-input"></span>
+                </div>
+            </div>
+            <br>
+            <div class="form-submit">
+                <button id="timebutton" class="btn button full">Trocar tempo</button>
+            </div>
+            <h4 id="mintext"></h4>
+        </div>
+        <div class="settings-section">
+            <h2 class="settings-title">Senha</h2>
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="currentpass" name="currentPassword" placeholder="Senha antiga" type="password"
+                           class="form-control"
+                           autocomplete="Senha antiga" value="">
+                    <span class="focus-input"></span>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="newpass" name="password" placeholder="Senha nova" type="password" class="form-control"
+                           autocomplete="Senha nova" value="">
+                    <span class="focus-input"></span>
+                </div>
+            </div>
+            <br>
+            <div class="form-submit">
+                <button id="changepassword" class="btn button full">Trocar senha</button>
+            </div>
+            <h4 id="senhatext"></h4>
+        </div>
+        <div class="settings-section">
+            <h2 class="settings-title">Geral</h2>
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="bloquearSite" placeholder="Bloquear sites conhecimentos" type="checkbox"
+                           class="form-control">Requisitar login ao acessar sites privados (insta, face, banco etc)
+                    <span class="focus-input"></span>
+                </div>
+            </div>
+            <br>
+            <h4 id="bloqueartext"></h4>
+        </div>
+        <a href="https://github.com/SrBalbucio">Criado por SrBalbucio!</a>
+    </div>
+</div>
+<script src="scripts/settings.js"></script>
